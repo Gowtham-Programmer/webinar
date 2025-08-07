@@ -46,7 +46,9 @@
 <body>
 
 <div class="container mt-5">
-    <a href="{{ route('webinars.index') }}" class="btn btn-primary mb-4">⬅️ Back</a>
+    <!-- <a href="{{ route('webinars.index') }}" class="btn btn-primary mb-4">⬅️ Back</a> -->
+     <a href="{{ url()->previous() }}" class="btn btn-secondary mb-4">⬅️ Back</a>
+
 
 
     <div class="card shadow-lg">

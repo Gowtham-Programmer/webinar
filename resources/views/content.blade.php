@@ -93,17 +93,25 @@
 
             <!-- Register Button -->
         <form action="{{ route('webinars.book', $webinar->id) }}" method="POST">
+            @if(isset($webinar))
+                <div style="margin-top:15px; font-size:18px; color:#fff;">
+                    <p><strong>📅 Date:</strong> {{ \Carbon\Carbon::parse($webinar->date)->format('d M Y') }}</p>
+                    <p><strong>⏰ Time:</strong> {{ date('h:i A', strtotime($webinar->time)) }}</p>
+                </div>
+            @endif
+
             @csrf
-            <button class="btn btn-warning" style="padding:10px 20px; font-size:16px; border:none; border-radius:5px; cursor:pointer;">
-                🎯 Click Here to Register for Free Webinar
-            </button>
+            <a href="{{ route('book.create', $webinar->id) }}" class="btn btn-success">
+    Book This Webinar
+</a>
+            <!-- Webinar Date and Time -->
         </form>
 
             <div class="vertical-dots"></div>
 
             <h3>Grow & nurture the ideas you have.</h3>
             <p><strong>322-517-4946</strong></p>
-            <a href="#" class="btn-cta">CONTACT US</a>
+            <a href="{{ route('contact') }}" class="btn-cta">CONTACT US</a>
         </div>
         <div class="hero-image">
             <img src="{{ asset('/uploads/img/webinar-banner.jpg') }}" alt="Marketing Expert">

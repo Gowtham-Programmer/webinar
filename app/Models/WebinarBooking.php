@@ -9,7 +9,7 @@ class WebinarBooking extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'webinar_id'];
+    protected $fillable = ['user_id', 'webinar_id','first_name', 'surname', 'email', 'phone',];
 
     public function user() {
         return $this->belongsTo(User::class);

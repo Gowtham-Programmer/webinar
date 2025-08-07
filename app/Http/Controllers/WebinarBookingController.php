@@ -58,7 +58,7 @@ class WebinarBookingController extends Controller
         }
     );
 
-    return redirect()->route('my.webinars')->with('success', 'Webinar booked successfully! Check your email for the join link.');
+    return redirect()->route('my-webinars')->with('success', 'Webinar booked successfully! Check your email for the join link.');
 }
 
     public function myWebinars()
@@ -71,11 +71,36 @@ class WebinarBookingController extends Controller
         return view('webinars.my-webinars', compact('bookings'));
     }
     public function show($id)
-{
+    {
     // Fetch the webinar by ID
-    $webinar = Webinar::findOrFail($id);
+    // $webinar = Webinar::findOrFail($id);
 
     // Pass it to the Blade view
     return view('webinar.show', compact('webinar'));
+    }
+
+   public function store(Request $request, Webinar $webinar)
+{
+    $validated = $request->validate([
+        'first_name' => 'required|string|max:255',
+        'surname' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'phone' => 'required|string|max:20',
+    ]);
+
+    WebinarBooking::create([
+        'user_id'    => auth()->check() ? auth()->id() : null,
+        'webinar_id' => $webinar->id,
+        'first_name' => $validated['first_name'],
+        'surname'    => $validated['surname'],
+        'email'      => $validated['email'],
+        'phone'      => $validated['phone'],
+    ]);
+
+    return redirect()->route('webinars.show', $webinar->id)
+                     ->with('success', '✅ Successfully registered for the webinar!');
 }
+
+
+
 }
