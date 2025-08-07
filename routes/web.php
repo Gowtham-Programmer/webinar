@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SMSController;
 use App\Http\Controllers\WebinarBookingController;
@@ -73,7 +74,7 @@ Route::resource('webinars', WebinarController::class)->only(['index', 'show']);
 
 // Booking Routes (Only Logged-in Users)
 Route::post('/webinars/{webinar}/book', [WebinarBookingController::class, 'book'])
-    ->middleware('auth')
+    // ->middleware('auth')
     ->name('webinars.book');
 
 Route::get('/my-webinars', [WebinarBookingController::class, 'myWebinars'])
@@ -88,7 +89,19 @@ Route::get('/test-mail', function() {
     return 'Mail sent!';
 });
 Route::get('/content', [App\Http\Controllers\ContentController::class, 'index'])->name('content.page');
-Route::get('/webinar/{id}', [WebinarController::class, 'show'])->name('webinars.show');
-// Route::post('/webinar/{id}/book', [WebinarBookingController::class, 'store'])->name('webinars.book');
+// Route::get('/webinar/{webinars}', [WebinarController::class, 'show'])->name('webinars.show');
+// Route::post('/webinar/{webinar}/book', [WebinarBookingController::class, 'store'])->name('webinars.book');
 
+// Show webinar details
+Route::get('/webinars/{webinar}', [WebinarController::class, 'show'])->name('webinars.show');
+
+// Handle booking submission
+// Route::post('/webinars/{webinar}/book', [WebinarBookingController::class, 'store'])->name('webinars.book');
+
+
+// Show the booking form
+Route::get('/book/{webinar}', [BookController::class, 'create'])->name('book.create');
+
+// Handle booking submission
+Route::post('/book/{webinar}', [BookController::class, 'store'])->name('book.store');
 
